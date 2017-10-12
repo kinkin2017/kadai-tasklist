@@ -1,4 +1,10 @@
 <%= form_for(task) do |f| %>
+
+<%= f.label :status, 'Task ステータス' %>
+
+<%= f.text_field :status %>
+
+
 <%= f.label :contet, 'Task 内容' %>
 
 <%= f.text_field :contet %>

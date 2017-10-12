@@ -2,9 +2,14 @@
 <%= @task.id %>
 の内容 </h1>
 
-<p>
+<p>Task Status:
+  <%= @task.status %>
+</p>
+<p>Task 内容:
   <%= @task.contet %>
-  <%= @task.created_at %>
+</p>
+<p>Task Update Time
+  <%= @task.updated_at %>
 </p>
 
 <%= link_to 'TASK LIST に戻る', tasks_path %>
