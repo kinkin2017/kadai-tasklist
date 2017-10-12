@@ -1,11 +1,4 @@
 <h1>Create NEW TASK</h1>
-<%= form_for(@task) do |f| %>
-<%= f.label :contet, '内容' %>
-
-<%= f.text_field :contet %>
-
-<%= f.submit '作成' %>
-
-<% end %>
+<%= render 'form', task: @task %>
 
 <%= link_to 'TASK LIST に戻る', tasks_path %>

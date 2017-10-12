@@ -3,14 +3,6 @@
   の修正ページ
 </h1>
 
-<%= form_for(@task) do |f| %>
-
-<%= f.label :contet, 'Task 内容' %>
-
-<%= f.text_field :contet %>
-
-<%= f.submit '修正' %>
-
-<% end %>
+<%= render 'form', task: @task %>
 
 <%= link_to 'TASK LIST に戻る', tasks_path %>
