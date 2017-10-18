@@ -9,15 +9,15 @@ class TasksController < ApplicationController
   end
   
   def new
-    @task = Task.new
+    @task_d = Task.new
   end
   
   def create
-    @task = Task.new(task_params)
+    @task_d = Task.new(task_params)
     
-    if @task.save
+    if @task_d.save
       flash[:success] = 'Taskが正常に作成されました'
-      redirect_to @task
+      redirect_to @task_d
     else
       flash.now[:danger] = 'Taskが作成されませんでした'
       render :new
@@ -31,9 +31,9 @@ class TasksController < ApplicationController
   def update
     # @task = Task.find(params[:id])
     
-    if @task.update(task_params)
+    if @task_d.update(task_params)
       flash[:success] = 'Taskが正常に更新されました'
-      redirect_to @task
+      redirect_to @task_d
     else
       flash.now[:danger] = 'Taskが更新されませんでした'
       render :edit
@@ -42,7 +42,7 @@ class TasksController < ApplicationController
   
   def destroy
     # @task = Task.find(params[:id])
-    @task.destroy
+    @task_d.destroy
     
     flash[:success] = 'Taskが正常に削除されました'
     redirect_to tasks_url
@@ -51,7 +51,7 @@ class TasksController < ApplicationController
   private
   
   def find_task
-    @task = Task.find(params[:id])
+    @task_d = Task.find(params[:id])
   end
   
   # Strong Parameter
