@@ -1,54 +1,68 @@
 class TasksController < ApplicationController
-  before_action :find_task, only: [:show, :edit, :update, :destroy]
-  def index
-    @tasks = Task.all
-  end
+  before_action :require_user_logged_in
+  before_action :correct_user, only: [:destroy]
+#  before_action :find_task, only: [:show, :edit, :update, :destroy]
+#  def index
+#    @tasks = Task.all
+#  end
   
-  def show
+#  def show
     # @task = Task.find(params[:id])
-  end
+#  end
   
-  def new
-    @task_d = Task.new
-  end
+#  def new
+#    @task_d = Task.new
+#  end
   
   def create
-    @task_d = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
+ #   @task_d = Task.new(task_params)
     
-    if @task_d.save
+    if @task.save
       flash[:success] = 'Taskが正常に作成されました'
-      redirect_to @task_d
+      redirect_to root_url
     else
+      @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
       flash.now[:danger] = 'Taskが作成されませんでした'
-      render :new
+      render 'toppages/index'
     end
   end
   
-  def edit
+#  def edit
     # @task = Task.find(params[:id])
-  end
+#  end
   
-  def update
+#  def update
     # @task = Task.find(params[:id])
     
-    if @task_d.update(task_params)
-      flash[:success] = 'Taskが正常に更新されました'
-      redirect_to @task_d
-    else
-      flash.now[:danger] = 'Taskが更新されませんでした'
-      render :edit
-    end
-  end
+#    if @task_d.update(task_params)
+#      flash[:success] = 'Taskが正常に更新されました'
+#      redirect_to @task_d
+#    else
+#      flash.now[:danger] = 'Taskが更新されませんでした'
+#      render :edit
+#    end
+#  end
   
   def destroy
     # @task = Task.find(params[:id])
-    @task_d.destroy
+    @task.destroy
     
     flash[:success] = 'Taskが正常に削除されました'
-    redirect_to tasks_url
+    redirect_back(fallback_location: root_path)
   end
   
   private
+  def tasks_params
+    params.require(:task).permit(:contet,status)
+  end
+  
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      redirect_to root_url
+    end
+  end
   
   def find_task
     @task_d = Task.find(params[:id])
