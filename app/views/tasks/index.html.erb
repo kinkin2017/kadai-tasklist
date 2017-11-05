@@ -1,4 +1,4 @@
-<h1>メッセージ一覧</h1>
+<h1>Task一覧</h1>
 <% if @tasks.any? %>
 <table class="table table-striped">
   <thead>
@@ -10,11 +10,14 @@
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
+      <% user = task.user %>
+      <% if current_user == task.user %>
     <tr>
       <td><%= link_to task.id, task %></td>
       <td><%= task.status %></td>
       <td><%= task.contet %></td>
     </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
